@@ -1,22 +1,28 @@
 import React from 'react';
 import Parser from 'html-react-parser';
-import './post.css';
+import './style.css';
 
-function Post(props) {
-    
+function Post({element}) {
+
+    const truncate = (text) => {
+        return text.length > 30 ? text.substring(0, 40) + "..." : text;
+    }
+        
     return (
-        <div className="card">
-            <div className="card__header">
-                <img src={props.element.post_thumbnail.URL} alt="" />   
-            </div>
-            <div className="card__body">
-                <span className="card__tag">123</span>
-                <h2 className="card__heading">
-                    {props.element.title}
+        <div className="post">
+            <img src={element.post_thumbnail !== null ? element.post_thumbnail.URL : ''} alt="" />   
+            <div className="post__body">
+                <span>123</span>
+                <h2>
+                    {truncate(element.title)}
                 </h2>
-                <p className="card__lead">
-                    {Parser(props.element.excerpt)}
-                </p>
+                <div className="post__lead">
+                    {Parser(element.excerpt)}
+                </div>
+                <div className="post__author">
+                    <img src={element.author.avatar_URL} alt="" /> 
+                    <h3>{element.author.first_name} {element.author.last_name}</h3>
+                </div>
             </div>
         </div>
     )
